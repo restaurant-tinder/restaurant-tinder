@@ -15,9 +15,14 @@ app.post('/api/rooms', (req, res) => {
 app.post('/api/rooms/start', (req, res) => {
     console.log(req.body);
     let body = req.body;
-    // let body = JSON.stringify(req.body);
     service.getRestaurants(body.id, body.term, body.location, (results) => {
         res.send(JSON.stringify(results));
+    })
+})
+
+app.post('/api/rooms/join', (req, res) => {
+    service.joinRoom(req.body.id, (result) => {
+        res.send(JSON.stringify(result));
     })
 })
 

@@ -4,6 +4,7 @@ const RestaurantSchema = require('../model/restaurant');
 const mongoose = require('mongoose');
 const axios = require('axios').default;
 const Flatted = require('flatted');
+const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
 class RoomService {
@@ -76,6 +77,26 @@ class RoomService {
             .catch((error) => {
                 console.log(error);
             })
+        })
+    }
+
+    joinRoom(roomId, completion) {
+        this.Room.findById(roomId, (err, room) => {
+            if (room.state == 'WAITING') {
+                let player = {
+                    _id: uuidv4(),
+                    state: 'READY'
+                }
+                room.players.push(player);
+                room.save();
+                completion(player);
+            }
+            else {
+                let error = {
+                    message: 'Unable to join because the room has already started or ended'
+                }
+                completion(error)
+            }
         })
     }
 
