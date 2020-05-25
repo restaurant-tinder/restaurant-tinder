@@ -20,8 +20,8 @@ app.post('/api/rooms/start', (req, res) => {
     })
 })
 
-app.post('/api/rooms/join', (req, res) => {
-    service.joinRoom(req.body.id, (result) => {
+app.post('/api/rooms/:id/join', (req, res) => {
+    service.joinRoom(req.params.id, (result) => {
         res.send(JSON.stringify(result));
     })
 })
