@@ -6,6 +6,10 @@ const RestaurantSchema = new mongoose.Schema({
     reviewsCount: Number,
     priceRange: String,
     imageLink: String,
+    address: String,
+    city: String,
+    state: String,
+    zip: String,
     votes: Number
 });
 
