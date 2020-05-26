@@ -4,6 +4,10 @@ const RoomService = require('./service/roomservice');
 const app = express();
 const service = new RoomService();
 
+const cors = require("cors");
+
+app.use(cors());
+
 app.use(express.json());
 
 app.post('/api/rooms', (req, res) => {
