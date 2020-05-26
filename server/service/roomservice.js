@@ -100,6 +100,48 @@ class RoomService {
         })
     }
 
+    vote(roomId, playerId, restaurantId, voteHandler, roundCompletion) {
+        this.Room.findById(roomId, (err, room) => {
+            let player = room.players.find(player => player._id == playerId);
+            player.state = 'VOTED';
+
+            let choice = room.option1._id == restaurantId ? room.option1 : room.option2;
+            choice.votes += 1;
+            if (this.isNextRoundReady(room)) {
+                roundCompletion(room);
+            }
+            voteHandler(player);
+            room.save();
+        })
+    }
+
+    isNextRoundReady(room) {
+        for (i = 0; i < room.players.length; i++) {
+            if (room.players[i].state == 'READY') {
+                return false;
+            }
+        }
+
+        for (i = 0; i < room.players.length; i++) {
+            room.players[i].state = 'READY';
+        }
+        room.option1 = room.option1.votes > room.option2.votes ? room.option1 : room.option2;
+
+        if (room.currentRound == room.lastRound) {
+            room.winner = room.option1;
+            room.state = 'FINISHED';
+            return true;
+        }
+
+        var restaurants = room.restaurants;
+        let index = Math.floor(Math.random() * restaurants.length);
+        room.option2 = restaurants[index];
+        restaurants.splice(index, 1);
+        room.restaurants = restaurants;
+        room.currentRound += 1;
+        return true;
+    }
+
     buildRoom(room, restaurants) {
         room.state = 'STARTED';
                 

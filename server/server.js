@@ -1,8 +1,11 @@
 const express = require('express');
 const RoomService = require('./service/roomservice');
-
+const http = require('http');
 const app = express();
-const service = new RoomService();
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+let service = new RoomService();
 
 const cors = require("cors");
 
@@ -10,26 +13,43 @@ app.use(cors());
 
 app.use(express.json());
 
-app.post('/api/rooms', (req, res) => {
-    service.createRoom((response) => {
-        res.send(JSON.stringify(response));
+io.on('create', socket => {
+    service.createRoom(result => {
+        socket.emit('roomCreated', result);
     })
 })
 
-app.post('/api/rooms/start', (req, res) => {
-    console.log(req.body);
-    let body = req.body;
-    service.getRestaurants(body.id, body.term, body.location, (results) => {
-        res.send(JSON.stringify(results));
+io.on('join', socket => {
+    let id = socket.handshake.query.id;
+
+    service.joinRoom(id, result => {
+        socket.join(id);
+        socket.emit(result);
     })
 })
 
-app.post('/api/rooms/:id/join', (req, res) => {
-    service.joinRoom(req.params.id, (result) => {
-        res.send(JSON.stringify(result));
+io.on('getRestaurants', socket => {
+    let id = socket.handshake.query.id;
+    let term = socket.handshake.query.id;
+    let location = socket.handshake.query.location;
+
+    service.getRestaurants(id, term, location, result => {
+        socket.broadcast.to(id).emit('gameStarted', result);
     })
 })
 
-app.listen(8080, () => {
+io.on('vote', socket => {
+    let roomId = socket.handshake.query.roomId;
+    let playerId = socket.handshake.query.playerId;
+    let restaurantId = socket.handshake.query.restaurantId;
+
+    service.vote(roomId, playerId, restaurantId, (player) => {
+        socket.emit('voted', player);
+    }, (room) => {
+        io.to(roomId).emit('roundFinished', room);
+    })
+})
+
+server.listen(8080, () => {
     console.log('Server started...')
 })
