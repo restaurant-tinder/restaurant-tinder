@@ -7,6 +7,10 @@ const io = require('socket.io')(server);
 
 let service = new RoomService();
 
+const cors = require("cors");
+
+app.use(cors());
+
 app.use(express.json());
 
 io.on('create', socket => {
