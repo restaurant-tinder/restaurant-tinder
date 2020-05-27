@@ -13,40 +13,45 @@ app.use(cors());
 
 app.use(express.json());
 
-io.on('create', socket => {
-    service.createRoom(result => {
-        socket.emit('roomCreated', result);
+io.on('connection', socket => {
+    socket.emit('connected', "youre connected");
+
+    socket.on('create', () => {
+        console.log('in create');
+        service.createRoom(result => {
+            socket.emit('roomCreated', result);
+        })
     })
-})
 
-io.on('join', socket => {
-    let id = socket.handshake.query.id;
-
-    service.joinRoom(id, result => {
-        socket.join(id);
-        socket.emit(result);
+    socket.on('join', data => {
+        let id = data.id;
+    
+        service.joinRoom(id, result => {
+            socket.join(id);
+            socket.emit(result);
+        })
     })
-})
 
-io.on('getRestaurants', socket => {
-    let id = socket.handshake.query.id;
-    let term = socket.handshake.query.id;
-    let location = socket.handshake.query.location;
-
-    service.getRestaurants(id, term, location, result => {
-        socket.broadcast.to(id).emit('gameStarted', result);
+    socket.on('getRestaurants', query => {
+        let id = query.id;
+        let term = query.id;
+        let location = query.location;
+    
+        service.getRestaurants(id, term, location, result => {
+            socket.broadcast.to(id).emit('gameStarted', result);
+        })
     })
-})
 
-io.on('vote', socket => {
-    let roomId = socket.handshake.query.roomId;
-    let playerId = socket.handshake.query.playerId;
-    let restaurantId = socket.handshake.query.restaurantId;
-
-    service.vote(roomId, playerId, restaurantId, (player) => {
-        socket.emit('voted', player);
-    }, (room) => {
-        io.to(roomId).emit('roundFinished', room);
+    socket.on('vote', query => {
+        let roomId = query.roomId;
+        let playerId = query.playerId;
+        let restaurantId = query.restaurantId;
+    
+        service.vote(roomId, playerId, restaurantId, (player) => {
+            socket.emit('voted', player);
+        }, (room) => {
+            io.to(roomId).emit('roundFinished', room);
+        })
     })
 })
 
