@@ -1,12 +1,16 @@
-import io from 'socket.io-client';
+const io = require('socket.io-client');
 
 export const startTournament = () => {
     const ENDPOINT = 'http://localhost:8080';
-    const socket = io(ENDPOINT);
-    socket.emit('create');
+    const socket = io.connect(ENDPOINT);
+    socket.emit('create', 'hi');
     socket.on('roomCreated', result => {
         console.log(result)
     });
+
+    socket.on('connected', str => {
+        console.log(str);
+    })
 }
 
 // export const joinTournament = (roomID) => {
