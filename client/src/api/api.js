@@ -10,7 +10,7 @@ export const startTournament = async () => {
     socket.emit('create');
     let id = ""
     await socket.on('roomCreated', (result) => {
-        id = result
+        id = result.id
     });
     console.log(id) // empty
     return id
