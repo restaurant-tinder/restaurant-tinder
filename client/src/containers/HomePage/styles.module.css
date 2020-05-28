@@ -1,0 +1,26 @@
+.HomePageContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 80px;
+    box-sizing: border-box;
+}
+h1 {
+    font-size: 45px;
+    color: #1f2933;
+    margin: 0;
+}
+h2 {
+    font-size: 35px;
+    color: #1f2933;
+}
+.ButtonContainer {
+    margin-top: 50px;
+}
+.FoodFightImage {
+    max-width: 100%; 
+    max-height: 400px;
+}

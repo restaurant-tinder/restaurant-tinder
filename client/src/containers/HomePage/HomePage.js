@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import Button from '../../components/UI/Button/Button';
 import * as api from '../../api/api';
+import classes from './styles.module.css';
+import FoodFightImage from '../../assets/food_fight.jpg';
+import { useHistory } from "react-router-dom";
 
 function HomePage(props) {
-    const [roomID, setRoomID] = useState('')
+    const [roomID, setRoomID] = useState('');
+    const history = useHistory();
 
     const handleHostTournament = () => {
-        api.startTournament()
+        const id = api.startTournament();
+        console.log(id);
+        // history.push(`/room/${id}/select-restaurant`);
     }
 
-    // const handleJoinTournament = () => {
-    //     api.joinTournament(roomID)
-    // }
+    const handleJoinTournament = () => {
+        api.joinTournament(roomID)
+    }
 
     return (
-        <div>
-            <button style={{margin: "50px"}} onClick={handleHostTournament}>
-                Host Tournament
-            </button>
-            <input type="text" onInput={e => setRoomID(e.target.value)} style={{margin: "50px", width: "200px"}}>
-            </input>
-            {/* <button onClick={handleJoinTournament}>Join Tournament Room</button> */}
-        </div>
+            <div className={classes.HomePageContainer}>
+                <div className={classes.title}>
+                    <h1>Restaurant Tournament</h1>
+                    <h2>Host or join a room!</h2>
+                </div>
+                <div className={classes.ButtonContainer}>
+                    <Button onButtonClick={handleHostTournament}>
+                        Host
+                    </Button>
+                    <Button onButtonClick={handleJoinTournament}>
+                        Join
+                    </Button>
+                </div>
+                <img className={classes.FoodFightImage} src={FoodFightImage} alt="Food Fight"></img>
+            </div>
     )
 }
 

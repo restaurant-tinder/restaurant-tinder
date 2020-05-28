@@ -1,23 +1,25 @@
 const io = require('socket.io-client');
+const ENDPOINT = 'localhost:8080';
+const socket = io.connect(ENDPOINT);
 
-export const startTournament = () => {
-    const ENDPOINT = 'http://localhost:8080';
-    const socket = io.connect(ENDPOINT);
-    socket.emit('create', 'hi');
-    socket.on('roomCreated', result => {
-        console.log(result)
+socket.on('connected', str => {
+    console.log(str);
+})
+
+export const startTournament = async () => {
+    socket.emit('create');
+    let id = ""
+    await socket.on('roomCreated', (result) => {
+        id = result
     });
-
-    socket.on('connected', str => {
-        console.log(str);
-    })
+    console.log(id) // empty
+    return id
 }
 
-// export const joinTournament = (roomID) => {
-//     try {
-//         const res = await axios.post(`/api/rooms/${roomID}/join`)
-//         return res
-//     } catch (error) {
-//         return error
-//     }
-// }
+export const joinTournament = (roomID) => {
+    const data = {id: roomID}
+    socket.emit('join', data)
+    socket.on('joined', result => {
+        console.log(result)
+    })
+}

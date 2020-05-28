@@ -28,7 +28,7 @@ io.on('connection', socket => {
     
         service.joinRoom(id, result => {
             socket.join(id);
-            socket.emit(result);
+            socket.emit('joined', result);
         })
     })
 
