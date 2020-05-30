@@ -6,14 +6,11 @@ socket.on('connected', str => {
     console.log(str);
 })
 
-export const startTournament = async () => {
+export const startTournament = (callback) => {
     socket.emit('create');
-    let id = ""
-    await socket.on('roomCreated', (result) => {
-        id = result.id
+    socket.once('roomCreated', (result) => {
+        callback(result.id)
     });
-    console.log(id) // empty
-    return id
 }
 
 export const joinTournament = (roomID) => {
@@ -21,5 +18,15 @@ export const joinTournament = (roomID) => {
     socket.emit('join', data)
     socket.on('joined', result => {
         console.log(result)
+    })
+}
+
+export const getRestaurants = (query) => {
+    socket.emit('getRestaurants', query);
+}
+
+export const onGameStarted = (callback) => {
+    socket.on('gameStarted', (result) => {
+        callback(result)
     })
 }

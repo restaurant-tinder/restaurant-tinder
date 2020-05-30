@@ -10,7 +10,7 @@ function App() {
     <div className={classes.App}>
       <BrowserRouter>
         <Switch>
-          <Route path="/room/id:/select-restaurant" component={SelectRestaurantPage}/>
+          <Route path="/room/:id/select-restaurant" component={SelectRestaurantPage}/>
           <Route path="/" exact component={HomePage} />
         </Switch>
       </BrowserRouter>

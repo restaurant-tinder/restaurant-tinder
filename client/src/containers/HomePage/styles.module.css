@@ -1,10 +1,10 @@
-.HomePageContainer {
+.homePageContainer {
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     padding: 80px;
     box-sizing: border-box;
 }
@@ -17,10 +17,10 @@ h2 {
     font-size: 35px;
     color: #1f2933;
 }
-.ButtonContainer {
+.buttonContainer {
     margin-top: 50px;
 }
-.FoodFightImage {
+.foodFightImage {
     max-width: 100%; 
     max-height: 400px;
 }

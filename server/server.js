@@ -34,9 +34,10 @@ io.on('connection', socket => {
 
     socket.on('getRestaurants', query => {
         let id = query.id;
-        let term = query.id;
+        let term = query.term;
         let location = query.location;
-    
+        console.log(socket.id);
+        console.log(id);
         service.getRestaurants(id, term, location, result => {
             socket.broadcast.to(id).emit('gameStarted', result);
         })
@@ -50,7 +51,7 @@ io.on('connection', socket => {
         service.vote(roomId, playerId, restaurantId, (player) => {
             socket.emit('voted', player);
         }, (room) => {
-            io.to(roomId).emit('roundFinished', room);
+            io.in(id).emit('roundFinished', room);
         })
     })
 })
