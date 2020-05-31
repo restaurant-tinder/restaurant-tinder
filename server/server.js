@@ -36,10 +36,8 @@ io.on('connection', socket => {
         let id = query.id;
         let term = query.term;
         let location = query.location;
-        console.log(socket.id);
-        console.log(id);
         service.getRestaurants(id, term, location, result => {
-            socket.broadcast.to(id).emit('gameStarted', result);
+            io.in(id).emit('gameStarted', result);
         })
     })
 

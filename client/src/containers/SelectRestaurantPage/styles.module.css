@@ -8,25 +8,37 @@
     height: 100%;
     width: 100%;
 }
+.idContainer {
+    margin-bottom: 40px;
+}
 .searchContainer {
     display: flex;
     flex-direction: row;
-    width: 80%;
-    text-align: center;
+    width: 90%;
+    text-align: left;
     align-items: center;
     justify-content: space-evenly;
     margin-bottom: 50px;
 }
-.terms {
+.termsContainer {
     width: 40%;
-    height: 22px;
-    font-size: 16px;
+    text-align: left;
 }
-
-.location {
-    width: 40%;
+.terms {
     height: 22px;
     font-size: 16px;
+    width: 80%;
+    margin-left: 10px;
+}
+.locationContainer {
+    width: 40%;
+    text-align: left;
+}
+.location {
+    height: 22px;
+    font-size: 16px;
+    width: 80%;
+    margin-left: 10px;
 }
 
 .button {

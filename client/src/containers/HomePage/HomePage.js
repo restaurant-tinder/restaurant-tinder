@@ -3,23 +3,29 @@ import Button from '../../components/UI/Button/Button';
 import * as api from '../../api/api';
 import classes from './styles.module.css';
 import foodFightImage from '../../assets/food_fight.jpg';
+import FormDialog from '../../components/UI/Modal/FormDialog';
 import { useHistory } from "react-router-dom";
 
-function HomePage(props) {
-    const [roomID, setRoomID] = useState('');
+function HomePage() {
+    const [openDialog, setOpenDialog] = useState(false);
+
     const history = useHistory();
 
     const handleHostTournament = () => {
         api.startTournament((roomID) => {
-            setRoomID(roomID);
+            api.joinTournament(roomID);
             history.push(`/room/${roomID}/select-restaurant`);
         });
     }
 
     const handleJoinTournament = () => {
-        api.joinTournament(roomID);
+        setOpenDialog(true);
     }
 
+    const handleCloseModal = () => {
+        setOpenDialog(false);
+    }
+    
     return (
         <div className={classes.homePageContainer}>
             <div className={classes.title}>
@@ -34,6 +40,7 @@ function HomePage(props) {
                     Join
                 </Button>
             </div>
+            <FormDialog open={openDialog} onClose={handleCloseModal}></FormDialog>
             <img className={classes.foodFightImage} src={foodFightImage} alt="Food Fight"></img>
         </div>
     )

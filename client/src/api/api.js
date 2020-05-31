@@ -14,7 +14,8 @@ export const startTournament = (callback) => {
 }
 
 export const joinTournament = (roomID) => {
-    const data = {id: roomID}
+    const data = {id: roomID};
+
     socket.emit('join', data)
     socket.on('joined', result => {
         console.log(result)
