@@ -9,17 +9,16 @@ socket.on('connected', str => {
 export const startTournament = (callback) => {
     socket.emit('create');
     socket.once('roomCreated', (result) => {
-        callback(result.id)
+        callback(result.id);
     });
 }
 
-export const joinTournament = (roomID) => {
+export const joinTournament = (roomID, callback) => {
     const data = {id: roomID};
-
     socket.emit('join', data)
-    socket.on('joined', result => {
-        console.log(result)
-    })
+    socket.once('joined', (result) => {
+        callback(result._id);
+    });
 }
 
 export const getRestaurants = (query) => {
@@ -27,7 +26,23 @@ export const getRestaurants = (query) => {
 }
 
 export const onGameStarted = (callback) => {
-    socket.on('gameStarted', (result) => {
-        callback(result)
+    socket.once('gameStarted', (result) => {
+        callback(result);
+    })
+}
+
+export const vote = (query) => {
+    socket.emit('vote', query);
+}
+
+export const onVoted = (callback) => {
+    socket.once('voted', (player) => {
+        callback(player);
+    })
+}
+
+export const onRoundFinished = (callback) => {
+    socket.once('roundFinished', (room) => {
+        callback(room);
     })
 }

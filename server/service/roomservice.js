@@ -62,6 +62,7 @@ class RoomService {
                         reviewsCount: obj.review_count,
                         priceRange: obj.price,
                         imageLink: obj.image_url,
+                        url: obj.url,
                         address: location.address1,
                         city: location.city,
                         state: location.state,
@@ -70,7 +71,15 @@ class RoomService {
                     }
                 })
 
-                this.buildRoom(room, restaurants);
+                if (restaurants.length > 1 && restaurants.length < 4) {
+                    this.buildRoom(room, restaurants.slice(0,2));
+                } else if (restaurants.length < 8) {
+                    this.buildRoom(room, restaurants.slice(0,4));
+                } else if (restaurants.length < 16) {
+                    this.buildRoom(room, restaurants.slice(0,8));
+                } else {
+                    this.buildRoom(room, restaurants.slice(0,16));
+                }
                 room.save();
                 completion(room);
             })
@@ -116,13 +125,13 @@ class RoomService {
     }
 
     isNextRoundReady(room) {
-        for (i = 0; i < room.players.length; i++) {
+        for (let i = 0; i < room.players.length; i++) {
             if (room.players[i].state == 'READY') {
                 return false;
             }
         }
 
-        for (i = 0; i < room.players.length; i++) {
+        for (let i = 0; i < room.players.length; i++) {
             room.players[i].state = 'READY';
         }
         room.option1 = room.option1.votes > room.option2.votes ? room.option1 : room.option2;

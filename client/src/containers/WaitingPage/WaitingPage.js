@@ -7,14 +7,12 @@ function WaitingPage(props) {
     const history = useHistory();
 
     useEffect(() => {
-        api.joinTournament(props.match.params.id);
-    });
-
-    useEffect(() => {
-        api.onGameStarted((result) => {
-            history.push({
-                pathname: `/room/${props.match.params.id}/tournament`, 
-                state: result
+        api.joinTournament(props.match.params.roomId, (playerId) => {
+            api.onGameStarted((result) => {
+                history.push({
+                    pathname: `/room/${props.match.params.roomId}/${playerId}/tournament`, 
+                    state: result
+                });
             });
         });
     }, []);

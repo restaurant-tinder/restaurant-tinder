@@ -45,11 +45,10 @@ io.on('connection', socket => {
         let roomId = query.roomId;
         let playerId = query.playerId;
         let restaurantId = query.restaurantId;
-    
         service.vote(roomId, playerId, restaurantId, (player) => {
             socket.emit('voted', player);
         }, (room) => {
-            io.in(id).emit('roundFinished', room);
+            io.in(roomId).emit('roundFinished', room);
         })
     })
 })

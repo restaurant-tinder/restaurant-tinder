@@ -15,22 +15,22 @@ function SelectRestaurantPage(props) {
     useEffect(() => {
         api.onGameStarted((result) => {
             history.push({
-                pathname: `/room/${props.match.params.id}/tournament`, 
+                pathname: `/room/${props.match.params.roomId}/${props.match.params.playerId}/tournament`, 
                 state: result
             });
         });
     }, []);
     
     const handleGetRestaurant = () => {
-        let query = {id: props.match.params.id, term: terms, location: location};
+        let query = {id: props.match.params.roomId, term: terms, location: location};
         api.getRestaurants(query);
     }
 
     return (
         <div className={classes.selectRestaurantContainer}>
             <div className={classes.idContainer}>
-                <h2 style={{margin: '0'}}>Your room ID is: {props.match.params.id}</h2>
-                <p>Share the room ID with others to participate in the tournament</p>
+                <h2 style={{margin: '0'}}>Your room ID is: {props.match.params.roomId}</h2>
+                <h3>Share the room ID with others to participate in the tournament</h3>
             </div>
             <div className={classes.searchContainer}>
                 <div className={classes.termsContainer}>

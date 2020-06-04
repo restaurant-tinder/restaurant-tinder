@@ -11,6 +11,9 @@
 .idContainer {
     margin-bottom: 40px;
 }
+label {
+    font-weight: bold;
+}
 .searchContainer {
     display: flex;
     flex-direction: row;

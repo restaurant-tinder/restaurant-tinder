@@ -13,8 +13,9 @@ function HomePage() {
 
     const handleHostTournament = () => {
         api.startTournament((roomID) => {
-            api.joinTournament(roomID);
-            history.push(`/room/${roomID}/select-restaurant`);
+            api.joinTournament(roomID, (playerId) => {
+                history.push(`/room/${roomID}/${playerId}/select-restaurant`);
+            });
         });
     }
 
