@@ -10,7 +10,7 @@ function TournamentPage(props) {
     const location = useLocation();
     const [tournamentStarted, setTournamentStarted] = useState(false);
     const [room, setRoom] = useState(null);
-    const [showDesktopView, setShowDesktopView] = useState(true);
+    const [showDesktopView, setShowDesktopView] = useState(window.innerWidth > 768);
 
     const history = useHistory();
 
@@ -45,6 +45,7 @@ function TournamentPage(props) {
 
     const vote = (restaurantId) => {
         console.log("VOTING");
+        console.log(restaurantId);
         let query = {}
         query.roomId = room._id;
         query.playerId = `${props.match.params.playerId}`;
