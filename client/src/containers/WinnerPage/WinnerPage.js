@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classes from './styles.module.css';
 import Stars from '../../components/UI/Stars/Stars';
 import { useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-
 
 function WinnerPage(props) { 
     const location = useLocation();

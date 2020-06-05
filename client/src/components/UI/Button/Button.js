@@ -6,13 +6,15 @@ const styles = {
   button: {
     width: '250px',
     height: '50px',
-    margin: '0 50px',
+    margin: '20px 50px',
     fontSize: '18px',
     backgroundColor: '#ff6b6b',
     '&:hover': {
         backgroundColor: '#fc2d2d'
-     }
+    }
   }
+
+  
 };
 
 const button = (props) => (

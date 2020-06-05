@@ -47,3 +47,23 @@ label {
 .button {
     width: 500px;
 }
+
+@media(max-width: 768px) {
+    .selectRestaurantContainer {
+        padding: 20px;
+    }
+    .searchContainer {
+        width: 100%;
+    }
+    .termsContainer {
+        justify-content: flex-start;
+    }
+    .terms {
+        margin-left: 0;
+        width: 100%;
+    }
+    .location {
+        margin-left: 0;
+        width: 100%;
+    }
+}

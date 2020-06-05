@@ -10,6 +10,7 @@ function TournamentPage(props) {
     const location = useLocation();
     const [tournamentStarted, setTournamentStarted] = useState(false);
     const [room, setRoom] = useState(null);
+    const [showDesktopView, setShowDesktopView] = useState(true);
 
     const history = useHistory();
 
@@ -34,6 +35,12 @@ function TournamentPage(props) {
         api.onVoted((player) => {
             console.log(player)
         });
+
+        function handleResize() {
+            setShowDesktopView(window.innerWidth > 768);
+        }
+      
+        window.addEventListener('resize', handleResize);
     }, []);
 
     const vote = (restaurantId) => {
@@ -45,11 +52,52 @@ function TournamentPage(props) {
         api.vote(query);
     }
 
+    const desktopView = (restaurant) => {
+        return (
+            <div className={classes.descriptionContainer}>
+                <div className={classes.starsContainer}>
+                        <Stars rating={restaurant.rating}></Stars>
+                    </div>
+                    <div className={classes.locationButtonsContainer}>
+                        <div className={classes.location}> 
+                            {restaurant.address}, {restaurant.city}, {restaurant.state}, {restaurant.zip}
+                        </div>
+                        <div className={classes.buttonsContainer}>
+                            <button className={classes.reviewsButton} onClick={() => {window.open(restaurant.url, "_blank")}}>Reviews</button>
+                            <div className={classes.voteButton} onClick={() => vote(restaurant._id)}>
+                                <img src={Heart}></img>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        );
+    }
+
+    const mobileView = (restaurant) => {
+        return (
+            <div className={classes.descriptionContainer}>
+                <div className={classes.location}> 
+                        {restaurant.address}, {restaurant.city}, {restaurant.state}, {restaurant.zip}
+                </div>
+                <div className={classes.locationButtonsContainer}>
+                    <div className={classes.starsContainer}>
+                    <Stars rating={restaurant.rating}></Stars>
+                </div>
+                    <div className={classes.buttonsContainer}>
+                        <button className={classes.reviewsButton} onClick={() => {window.open(restaurant.url, "_blank")}}>Reviews</button>
+                        <div className={classes.voteButton} onClick={() => vote(restaurant._id)}>
+                            <img src={Heart}></img>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return (
         <div className={classes.tournamentPageContainer}>
             {tournamentStarted ? 
             <div className={classes.restaurantContainer}>
-                <div className={classes.restaurant} style={{borderRight: 'solid 1px black'}}>
+                <div className={classes.restaurant}>
                     <div className={classes.imageContainer}>
                         <img className={classes.image} src={room.option1.imageLink}></img>
                     </div>
@@ -57,18 +105,11 @@ function TournamentPage(props) {
                         <p className={classes.title}>{location.state.option1.name}</p>
                         <p className={classes.priceRange}>{room.option1.priceRange}</p>
                     </div>
-                    <div className={classes.starsContainer}>
-                        <Stars rating={room.option1.rating}></Stars>
-                    </div>
-                    <div className={classes.location}> 
-                        {room.option1.address}, {room.option1.city}, {room.option1.state}, {room.option1.zip}
-                    </div>
-                    <div className={classes.buttonsContainer}>
-                        <button className={classes.reviewsButton} onClick={() => {window.open(room.option1.url, "_blank")}}>Reviews</button>
-                        <div className={classes.voteButton} onClick={() => vote(room.option1._id)}>
-                            <img src={Heart}></img>
-                        </div>
-                    </div>
+                    {showDesktopView ? 
+                        desktopView(room.option1)
+                        :
+                        mobileView(room.option1)
+                    }
                 </div>
                 <div className={classes.restaurant}>
                     <div className={classes.imageContainer}>
@@ -78,18 +119,11 @@ function TournamentPage(props) {
                         <p className={classes.title}>{room.option2.name}</p>
                         <p className={classes.priceRange}>{room.option2.priceRange}</p>
                     </div>
-                    <div className={classes.starsContainer}>
-                        <Stars rating={room.option2.rating}></Stars>
-                    </div>
-                    <div className={classes.location}> 
-                        {room.option2.address}, {room.option2.city}, {room.option2.state}, {room.option2.zip}
-                    </div>
-                    <div className={classes.buttonsContainer}>
-                        <button className={classes.reviewsButton} onClick={() => {window.open(room.option2.url, "_blank")}}>Reviews</button>
-                        <div className={classes.voteButton} onClick={() => vote(room.option2._id)}>
-                            <img src={Heart}></img>
-                        </div>
-                    </div>
+                    {showDesktopView ? 
+                        desktopView(room.option2)
+                        :
+                        mobileView(room.option2)
+                    }
                 </div>
             </div> 
             : <h1 style={{color: "white"}}>Sorry, the tournament has already started</h1>
