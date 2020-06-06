@@ -48,6 +48,8 @@
 }
 .descriptionContainer {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .starsContainer {
     text-align: left;
@@ -56,7 +58,7 @@
 .locationButtonsContainer {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
 }
 .location {
     font-size: 1.3vw;
@@ -87,7 +89,7 @@
 @media(max-width: 768px) {
     .tournamentPageContainer {
         padding: 0;
-        height: 75vh;
+        height: 50vh;
     }
     .restaurantContainer {
         flex-direction: column;
@@ -110,12 +112,15 @@
     }
     .descriptionContainer {
         height: 10%;
+        display: flex;
+        flex-direction: column;
     }
     .locationButtonsContainer {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         padding: 0 10px;
+        flex: 1;
     }
     .location {
         padding-top: 0;
@@ -127,7 +132,6 @@
     }
     .buttonsContainer {
         width: 100%;
-        height: 100%;
         padding: 0;
     }
     .reviewsButton {

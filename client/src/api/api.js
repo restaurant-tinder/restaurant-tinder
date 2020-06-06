@@ -36,13 +36,13 @@ export const vote = (query) => {
 }
 
 export const onVoted = (callback) => {
-    socket.once('voted', (player) => {
+    socket.on('voted', (player) => {
         callback(player);
     })
 }
 
 export const onRoundFinished = (callback) => {
-    socket.once('roundFinished', (room) => {
+    socket.on('roundFinished', (room) => {
         callback(room);
     })
 }

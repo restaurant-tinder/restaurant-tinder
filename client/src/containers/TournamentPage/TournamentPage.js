@@ -11,7 +11,7 @@ function TournamentPage(props) {
     const [tournamentStarted, setTournamentStarted] = useState(false);
     const [room, setRoom] = useState(null);
     const [showDesktopView, setShowDesktopView] = useState(window.innerWidth > 768);
-
+    const [showVoteButton, setShowVoteButton] = useState(true);
     const history = useHistory();
 
     useEffect(() => {
@@ -24,6 +24,7 @@ function TournamentPage(props) {
         api.onRoundFinished((updatedRoom) => {
             setRoom(updatedRoom);
             console.log(updatedRoom);
+            setShowVoteButton(true);
             if (updatedRoom.state == "FINISHED") {
                 history.push({
                     pathname: `/room/${props.match.params.roomId}/winner`, 
@@ -33,7 +34,9 @@ function TournamentPage(props) {
         });
 
         api.onVoted((player) => {
-            console.log(player)
+            if (player.state == 'VOTED') {
+                setShowVoteButton(false);
+            }
         });
 
         function handleResize() {
@@ -65,7 +68,7 @@ function TournamentPage(props) {
                         </div>
                         <div className={classes.buttonsContainer}>
                             <button className={classes.reviewsButton} onClick={() => {window.open(restaurant.url, "_blank")}}>Reviews</button>
-                            <div className={classes.voteButton} onClick={() => vote(restaurant._id)}>
+                            <div className={classes.voteButton} onClick={() => vote(restaurant._id)} style={{display: showVoteButton ? 'block' : 'none'}}>
                                 <img src={Heart}></img>
                             </div>
                         </div>
@@ -86,7 +89,7 @@ function TournamentPage(props) {
                 </div>
                     <div className={classes.buttonsContainer}>
                         <button className={classes.reviewsButton} onClick={() => {window.open(restaurant.url, "_blank")}}>Reviews</button>
-                        <div className={classes.voteButton} onClick={() => vote(restaurant._id)}>
+                        <div className={classes.voteButton} onClick={() => vote(restaurant._id)} style={{display: showVoteButton ? 'block' : 'none'}}>
                             <img src={Heart}></img>
                         </div>
                     </div>
