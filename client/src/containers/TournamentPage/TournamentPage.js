@@ -49,7 +49,7 @@ function TournamentPage(props) {
         let query = {}
         query.roomId = room._id;
         query.playerId = `${props.match.params.playerId}`;
-        query.restuarantId = restaurantId;
+        query.restaurantId = restaurantId;
         api.vote(query);
     }
 
