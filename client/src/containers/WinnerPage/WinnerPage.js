@@ -6,12 +6,12 @@ import { useLocation } from "react-router-dom";
 function WinnerPage(props) { 
     const location = useLocation();
     const [restaurant, setRestaurant] = useState(location.state);
-    
+
     return (
         <div className={classes.winnerPageContainer}>
             <div className={classes.winnerContainer}>
                 <div>
-                    <h1>Winner!</h1>
+                    <h1 style={{color: 'white'}}>Winner!</h1>
                 </div>
                 <div className={classes.restaurantContainer}>
                     <div className={classes.restaurant}>

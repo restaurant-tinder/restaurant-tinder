@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import * as api from '../../api/api';
 import classes from './styles.module.css';
 import { useHistory } from "react-router-dom";
