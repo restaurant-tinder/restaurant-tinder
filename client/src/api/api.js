@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const ENDPOINT = 'localhost:8080';
+const ENDPOINT = 'https://innate-lovely-blossom.glitch.me/';
 const socket = io.connect(ENDPOINT);
 
 socket.on('connected', str => {
