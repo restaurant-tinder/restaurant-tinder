@@ -45,6 +45,15 @@ io.on('connection', socket => {
         let roomId = query.roomId;
         let playerId = query.playerId;
         let restaurantId = query.restaurantId;
+
+        if (roomId == null || playerId == null || restaurantId == null) {
+            socket.emit("voteError", {
+                roomId: roomId,
+                playerId: playerId,
+                restaurantId: restaurantId
+            });
+        }
+
         service.vote(roomId, playerId, restaurantId, (player) => {
             socket.emit('voted', player);
         }, (room) => {

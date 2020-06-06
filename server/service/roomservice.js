@@ -134,7 +134,14 @@ class RoomService {
         for (let i = 0; i < room.players.length; i++) {
             room.players[i].state = 'READY';
         }
-        room.option1 = room.option1.votes > room.option2.votes ? room.option1 : room.option2;
+
+        if (room.option1.votes == room.option2.votes) {
+            let options = [room.option1, room.option2]
+            room.option1 = options[Math.floor(Math.random() * restaurants.length)];
+        }
+        else {
+            room.option1 = room.option1.votes > room.option2.votes ? room.option1 : room.option2;
+        }
 
         if (room.currentRound == room.lastRound) {
             room.winner = room.option1;
