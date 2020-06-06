@@ -117,9 +117,10 @@ class RoomService {
             let choice = room.option1._id == restaurantId ? room.option1 : room.option2;
             choice.votes += 1;
             if (this.isNextRoundReady(room)) {
-                if (room.state == "FINISHED") {
-                    console.log(room.winner);
-                }
+                console.log('Round: ' + room.currentRound + '/' + room.lastRound);
+                console.log(room.option1);
+                console.log(room.option2);
+                console.log(room.winner);
                 roundCompletion(room);
             }
             voteHandler(player);
@@ -146,11 +147,17 @@ class RoomService {
             room.option1 = room.option1.votes > room.option2.votes ? room.option1 : room.option2;
         }
 
+        room.option1.votes = 0;
+
         if (room.currentRound == room.lastRound) {
             room.winner = room.option1;
             room.state = 'FINISHED';
             return true;
         }
+
+        console.log('======BEFORE CALCULATION======');
+        console.log(room.option1);
+        console.log(room.option2);
 
         var restaurants = room.restaurants;
         let index = Math.floor(Math.random() * restaurants.length);
@@ -158,6 +165,10 @@ class RoomService {
         restaurants.splice(index, 1);
         room.restaurants = restaurants;
         room.currentRound += 1;
+
+        console.log('======AFTER CALCULATION======');
+        console.log(room.option1);
+        console.log(room.option2);
         return true;
     }
 
@@ -180,8 +191,8 @@ class RoomService {
 
         room.restaurants = restaurants;
 
-        var rounds = Math.min(room.players.length, restaurants.length);
-        rounds = Math.min(6, rounds);
+        var rounds = Math.min(6, restaurants.length);
+        rounds = Math.max(5, room.players.length > 10 ? 10 : room.players.length);
         room.lastRound = rounds > 0 ? rounds : 1;
     }
 }
