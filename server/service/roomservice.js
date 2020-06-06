@@ -117,6 +117,9 @@ class RoomService {
             let choice = room.option1._id == restaurantId ? room.option1 : room.option2;
             choice.votes += 1;
             if (this.isNextRoundReady(room)) {
+                if (room.state == "FINISHED") {
+                    console.log(room.winner);
+                }
                 roundCompletion(room);
             }
             voteHandler(player);
@@ -137,7 +140,7 @@ class RoomService {
 
         if (room.option1.votes == room.option2.votes) {
             let options = [room.option1, room.option2]
-            room.option1 = options[Math.floor(Math.random() * restaurants.length)];
+            room.option1 = options[Math.floor(Math.random() * options.length)];
         }
         else {
             room.option1 = room.option1.votes > room.option2.votes ? room.option1 : room.option2;
