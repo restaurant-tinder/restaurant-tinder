@@ -11,6 +11,10 @@ export default function Stars(props) {
             stars = (
                 <div>
                     <HalfStar></HalfStar>
+                    <EmptyStar></EmptyStar>
+                    <EmptyStar></EmptyStar>
+                    <EmptyStar></EmptyStar>
+                    <EmptyStar></EmptyStar>
                 </div>
             );
             break;
@@ -116,6 +120,9 @@ export default function Stars(props) {
         default:
             stars = (
                 <div>
+                    <EmptyStar></EmptyStar>
+                    <EmptyStar></EmptyStar>
+                    <EmptyStar></EmptyStar>
                     <EmptyStar></EmptyStar>
                     <EmptyStar></EmptyStar>
                 </div>
