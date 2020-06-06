@@ -9,7 +9,10 @@ require('dotenv').config();
 
 class RoomService {
     constructor() {
-        mongoose.connect('mongodb://localhost:27017/rtdb', { useNewUrlParser: true });
+        mongoose.connect(
+            'mongodb+srv://kormanchen:test123@cluster0-fbctd.mongodb.net/rtdb',
+            { useNewUrlParser: true }
+        );
 
         this.Restaurant = mongoose.model('Restaurant', RestaurantSchema);
         this.Room = mongoose.model('Room', RoomSchema);
