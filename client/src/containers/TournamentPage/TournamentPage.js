@@ -106,7 +106,7 @@ function TournamentPage(props) {
                         <img className={classes.image} src={room.option1.imageLink}></img>
                     </div>
                     <div className={classes.titleContainer}>
-                        <p className={classes.title}>{location.state.option1.name}</p>
+                        <p className={classes.title}>{room.option1.name}</p>
                         <p className={classes.priceRange}>{room.option1.priceRange}</p>
                     </div>
                     {showDesktopView ? 
