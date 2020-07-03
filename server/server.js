@@ -4,10 +4,13 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+const path = require('path');
 
 let service = new RoomService();
 
 const cors = require("cors");
+
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 
@@ -62,6 +65,14 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(8080, () => {
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('../client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+    });
+}
+
+server.listen(PORT, () => {
     console.log('Server started...')
 })
