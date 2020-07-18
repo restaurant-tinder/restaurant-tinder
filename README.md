@@ -5,7 +5,7 @@
 * Express and Node.js for backend logic
 
 # Try it out
-* https://restaurant-tournament.herokuapp.com/
+* https://master.dh4h0jhkk4gsl.amplifyapp.com/
 
 # Restaurant Tinder Decisions
 * We used MongoDB for data storage/persistence and have a free tier cluster on MongoDB Atlas
